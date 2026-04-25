@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Endurance — Content Creator & Strategist</title>
+<title>Endurance — Growth Manager & Content Strategist</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
@@ -27,10 +27,87 @@
 /* ===================== RESET ===================== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { font-family: var(--bod); background: var(--cream); color: var(--ink); overflow-x: hidden; }
+body { font-family: var(--bod); background: var(--cream); color: var(--ink); overflow-x: hidden; cursor: none; }
 a    { text-decoration: none; color: inherit; }
 ul   { list-style: none; }
 img  { display: block; max-width: 100%; }
+
+/* ===================== CUSTOM CURSOR ===================== */
+.cursor-dot {
+  width: 8px; height: 8px;
+  background: var(--brick);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, width 0.3s var(--ease), height 0.3s var(--ease), background 0.3s;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--brick);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s var(--ease), width 0.4s var(--ease), height 0.4s var(--ease), opacity 0.3s, border-color 0.3s;
+  opacity: 0.6;
+}
+.cursor-dot.expand  { width: 12px; height: 12px; background: var(--gold); }
+.cursor-ring.expand { width: 60px; height: 60px; border-color: var(--gold); opacity: 0.4; }
+
+/* ===================== SCROLL PROGRESS BAR ===================== */
+#progress-bar {
+  position: fixed; top: 0; left: 0;
+  height: 3px; width: 0%;
+  background: linear-gradient(90deg, var(--brick), var(--gold));
+  z-index: 1000;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(201,168,76,0.4);
+}
+
+/* ===================== PAGE INTRO OVERLAY ===================== */
+#intro-overlay {
+  position: fixed; inset: 0;
+  background: var(--brick);
+  z-index: 9000;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  animation: overlayOut 0.8s var(--ease) 2s forwards;
+}
+#intro-overlay .intro-name {
+  font-family: var(--dsp);
+  font-size: clamp(4rem, 14vw, 12rem);
+  color: var(--cream);
+  letter-spacing: .04em;
+  text-align: center;
+  animation: introNameIn 0.9s var(--ease) 0.2s both;
+}
+#intro-overlay .intro-sub {
+  font-family: var(--ser); font-style: italic;
+  font-size: clamp(0.9rem, 2vw, 1.4rem);
+  color: rgba(245,239,230,0.5);
+  letter-spacing: .2em; text-transform: uppercase;
+  text-align: center;
+  padding: 0 1.5rem;
+  animation: introNameIn 0.9s var(--ease) 0.5s both;
+}
+#intro-overlay .intro-line {
+  width: 0; height: 1.5px;
+  background: var(--gold);
+  margin: 1.2rem auto 1rem;
+  animation: introLine 0.8s var(--ease) 0.9s forwards;
+}
+@keyframes introNameIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes introLine {
+  to { width: 180px; }
+}
+@keyframes overlayOut {
+  0%   { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 100% 0); pointer-events: none; }
+}
 
 /* ===================== NAV ===================== */
 nav {
@@ -76,7 +153,7 @@ nav.stuck {
 .nav-cta::after { display: none !important; }
 
 /* hamburger */
-.ham { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+.ham { display: none; flex-direction: column; gap: 5px; cursor: none; padding: 4px; background: none; border: none; }
 .ham span { display: block; width: 24px; height: 2px; background: var(--brick); border-radius: 1px; transition: transform .3s, opacity .3s; }
 .ham.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .ham.open span:nth-child(2) { opacity: 0; }
@@ -106,7 +183,6 @@ nav.stuck {
   display: flex; flex-direction: column; justify-content: center;
   padding: 6% 7%; position: relative; overflow: hidden;
 }
-/* concentric circles deco */
 .hero-left::before {
   content: ''; position: absolute; top: -80px; right: -80px;
   width: 380px; height: 380px; border-radius: 50%;
@@ -124,30 +200,51 @@ nav.stuck {
   color: var(--gold); border: 1px solid var(--gold);
   padding: .28rem .75rem; border-radius: 2px;
   margin-bottom: 1.6rem; width: fit-content;
-  animation: up .7s var(--ease) .1s both;
+  animation: up .7s var(--ease) 2.3s both;
 }
 .hero-name {
   font-family: var(--dsp);
   font-size: clamp(4rem, 8vw, 8.5rem);
   line-height: .9; color: var(--cream);
   letter-spacing: .02em;
-  animation: up .8s var(--ease) .25s both;
+  animation: up .8s var(--ease) 2.45s both;
 }
 .hero-sub {
   font-family: var(--ser); font-style: italic;
   font-size: clamp(.9rem, 1.6vw, 1.25rem);
   color: rgba(245,239,230,.65);
-  margin: 1rem 0 1.6rem;
-  animation: up .8s var(--ease) .4s both;
+  margin: 1rem 0 .6rem;
+  animation: up .8s var(--ease) 2.6s both;
 }
+
+/* ===================== TYPED TEXT ===================== */
+.typed-wrap {
+  min-height: 1.6rem; margin-bottom: 1rem;
+  animation: up .8s var(--ease) 2.7s both;
+}
+.typed-text {
+  font-family: var(--ser); font-style: italic;
+  font-size: clamp(.85rem, 1.4vw, 1.1rem);
+  color: var(--gold);
+}
+.typed-cursor {
+  display: inline-block;
+  width: 2px; height: 1em;
+  background: var(--gold);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: blink 0.8s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
 .hero-tagline {
   font-size: .88rem; line-height: 1.8;
   color: rgba(245,239,230,.5); max-width: 360px;
-  animation: up .8s var(--ease) .55s both;
+  animation: up .8s var(--ease) 2.75s both;
 }
 .stats {
   display: flex; gap: 2.2rem; margin-top: 2.8rem; flex-wrap: wrap;
-  animation: up .8s var(--ease) .7s both;
+  animation: up .8s var(--ease) 2.9s both;
 }
 .stat span:first-child {
   font-family: var(--dsp); font-size: 2.2rem;
@@ -159,24 +256,28 @@ nav.stuck {
 }
 .hero-btns {
   display: flex; gap: .9rem; margin-top: 2.2rem; flex-wrap: wrap;
-  animation: up .8s var(--ease) .85s both;
+  animation: up .8s var(--ease) 3.05s both;
 }
+
+/* ===================== MAGNETIC BUTTONS ===================== */
 .btn-solid {
   display: inline-flex; align-items: center; gap: .45rem;
   background: var(--cream); color: var(--brick);
   font-size: .72rem; font-weight: 600;
   letter-spacing: .12em; text-transform: uppercase;
   padding: .78rem 1.5rem; border-radius: 2px;
-  transition: background .3s, transform .2s;
+  transition: background .3s, transform 0.2s var(--ease), box-shadow 0.3s;
+  will-change: transform;
 }
-.btn-solid:hover { background: var(--cream-dk); transform: translateY(-2px); }
+.btn-solid:hover { background: var(--cream-dk); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
 .btn-ghost {
   display: inline-flex; align-items: center; gap: .45rem;
   border: 1.5px solid rgba(245,239,230,.3); color: var(--cream);
   font-size: .72rem; font-weight: 500;
   letter-spacing: .12em; text-transform: uppercase;
   padding: .78rem 1.5rem; border-radius: 2px;
-  transition: border-color .3s;
+  transition: border-color .3s, transform 0.2s var(--ease);
+  will-change: transform;
 }
 .btn-ghost:hover { border-color: var(--cream); }
 
@@ -199,16 +300,17 @@ nav.stuck {
   object-fit: cover; object-position: top;
   position: relative; z-index: 2;
   filter: drop-shadow(0 20px 40px rgba(125,26,26,.22));
-  animation: up 1s var(--ease) .3s both;
+  animation: up 1s var(--ease) 2.5s both;
+  transition: transform 0.6s var(--ease);
+  will-change: transform;
 }
-/* fallback avatar when image path can't load */
 .hero-avatar {
   width: 60%; max-width: 300px; height: 420px;
   background: linear-gradient(155deg, var(--brick-md) 0%, var(--brick-dk) 100%);
   border-radius: 50% 50% 0 0;
   display: flex; align-items: center; justify-content: center;
   position: relative; z-index: 2;
-  animation: up 1s var(--ease) .3s both;
+  animation: up 1s var(--ease) 2.5s both;
 }
 .hero-avatar span {
   font-family: var(--dsp); font-size: 9rem;
@@ -233,6 +335,21 @@ nav.stuck {
   line-height: .93; letter-spacing: .01em;
 }
 
+/* Section number markers */
+.sec-num {
+  position: absolute;
+  font-family: var(--dsp);
+  font-size: clamp(8rem, 16vw, 18rem);
+  color: rgba(125,26,26,.04);
+  pointer-events: none; line-height: 1;
+  right: -2%; bottom: -4%;
+  letter-spacing: -.04em;
+  user-select: none;
+}
+.sec-num-light {
+  color: rgba(255,255,255,.03);
+}
+
 /* scroll reveal */
 .sr {
   opacity: 0; transform: translateY(32px);
@@ -241,7 +358,7 @@ nav.stuck {
 .sr.in { opacity: 1; transform: translateY(0); }
 
 /* ===================== ABOUT ===================== */
-#about { display: grid; grid-template-columns: 1fr 1fr; }
+#about { display: grid; grid-template-columns: 1fr 1fr; position: relative; }
 
 .about-l {
   background: var(--brick);
@@ -267,6 +384,7 @@ nav.stuck {
   background: var(--cream-dk);
   padding: 7% 7%;
   display: flex; flex-direction: column; justify-content: center; gap: 2rem;
+  position: relative; overflow: hidden;
 }
 .about-r .sec-label { margin-bottom: 1rem; }
 
@@ -289,7 +407,7 @@ nav.stuck {
 }
 
 /* ===================== PROJECTS ===================== */
-#projects { padding: 8% 7%; background: var(--cream); }
+#projects { padding: 8% 7%; background: var(--cream); position: relative; overflow: hidden; }
 
 .proj-hd {
   display: flex; justify-content: space-between;
@@ -304,10 +422,15 @@ nav.stuck {
   display: grid; grid-template-columns: repeat(3, 1fr);
   gap: 2px; background: var(--ink);
 }
+
+/* ===================== 3D TILT CARDS ===================== */
 .proj-card {
   background: var(--cream);
   padding: 2.4rem 1.9rem;
-  position: relative; overflow: hidden; cursor: pointer;
+  position: relative; overflow: hidden;
+  cursor: none;
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease, box-shadow 0.3s;
 }
 .proj-card::before {
   content: ''; position: absolute; inset: 0;
@@ -317,6 +440,7 @@ nav.stuck {
   z-index: 0;
 }
 .proj-card:hover::before { transform: translateY(0); }
+.proj-card:hover { box-shadow: 0 20px 60px rgba(125,26,26,0.3); }
 .proj-card > * { position: relative; z-index: 1; }
 
 .proj-n {
@@ -357,20 +481,6 @@ nav.stuck {
   color: var(--brick); transition: color .4s;
 }
 .proj-card:hover .proj-link { color: var(--gold); }
-
-.see-more {
-  display: flex; justify-content: center; margin-top: 3rem;
-}
-.see-more a {
-  display: inline-flex; align-items: center; gap: .55rem;
-  font-size: .74rem; font-weight: 500;
-  letter-spacing: .16em; text-transform: uppercase;
-  color: var(--brick);
-  border-bottom: 1.5px solid var(--brick);
-  padding-bottom: .3rem;
-  transition: gap .3s var(--ease), color .3s;
-}
-.see-more a:hover { gap: 1.1rem; color: var(--brick-dk); }
 
 /* ===================== SKILLS ===================== */
 #skills {
@@ -413,7 +523,7 @@ nav.stuck {
 }
 
 /* ===================== EXPERIENCE ===================== */
-#experience { padding: 8% 7%; background: var(--cream-dk); }
+#experience { padding: 8% 7%; background: var(--cream-dk); position: relative; overflow: hidden; }
 .exp-hd { margin-bottom: 4.5rem; }
 
 .timeline { position: relative; padding-left: 2rem; }
@@ -429,82 +539,95 @@ nav.stuck {
   content: ''; position: absolute;
   left: -5px; top: 7px;
   width: 11px; height: 11px; border-radius: 50%;
-  background: var(--brick); border: 2.5px solid var(--cream-dk);
-  transition: transform .3s, background .3s;
+  background: var(--brick);
+  box-shadow: 0 0 0 3px var(--cream-dk), 0 0 0 5px var(--brick);
+  transition: box-shadow 0.3s var(--ease);
 }
-.exp-item:hover::before { transform: scale(1.5); background: var(--gold); }
-
+.exp-item:hover::before {
+  box-shadow: 0 0 0 3px var(--cream-dk), 0 0 0 5px var(--gold);
+}
 .exp-yr {
-  font-family: var(--dsp); font-size: .85rem;
-  letter-spacing: .12em; color: var(--brick); margin-bottom: .4rem;
+  font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--brick); font-weight: 500; margin-bottom: .5rem;
 }
 .exp-role {
   font-family: var(--ser); font-weight: 700;
-  font-size: 1.45rem; color: var(--ink); margin-bottom: .2rem;
+  font-size: 1.2rem; color: var(--ink); margin-bottom: .2rem;
 }
 .exp-co {
-  font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--brick); font-weight: 500; margin-bottom: 1rem;
+  font-size: .75rem; color: rgba(26,10,10,.45);
+  letter-spacing: .08em; margin-bottom: 1rem;
 }
+.exp-list { display: flex; flex-direction: column; gap: .55rem; }
 .exp-list li {
-  font-size: .87rem; line-height: 1.75;
-  color: rgba(26,10,10,.58);
-  padding-left: 1.1rem; position: relative; margin-bottom: .4rem;
+  font-size: .83rem; line-height: 1.7;
+  color: rgba(26,10,10,.65);
+  padding-left: 1rem; position: relative;
 }
 .exp-list li::before {
-  content: '→'; position: absolute; left: 0;
-  color: var(--brick); font-size: .72rem;
+  content: '—'; position: absolute; left: 0;
+  color: var(--brick); font-size: .75rem;
 }
 
 /* ===================== CONTACT ===================== */
 #contact {
-  background: var(--brick); padding: 8% 7%;
+  padding: 8% 7%;
+  background: var(--cream);
   position: relative; overflow: hidden;
+  text-align: center;
 }
-#contact::before {
-  content: "LET'S TALK"; position: absolute;
-  bottom: -50px; right: -20px;
-  font-family: var(--dsp); font-size: 11vw;
-  color: rgba(245,239,230,.04); pointer-events: none; white-space: nowrap;
-}
-#contact .sec-label { color: var(--gold); }
-#contact .sec-label::before { background: var(--gold); }
-#contact .sec-title { color: var(--cream); margin-bottom: 1rem; }
-
+#contact .sec-label { justify-content: center; }
+#contact .sec-label::before { display: none; }
 .contact-sub {
-  font-size: .92rem; line-height: 1.75;
-  color: rgba(245,239,230,.55);
-  max-width: 440px; margin-bottom: 3.2rem;
+  font-size: .9rem; line-height: 1.8;
+  color: rgba(26,10,10,.45); max-width: 420px;
+  margin: 1.2rem auto 3rem;
 }
 .contact-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 2px; background: rgba(245,239,230,.15); max-width: 700px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px; background: var(--ink);
+  max-width: 900px; margin: 0 auto;
 }
 .c-card {
-  background: var(--brick);
-  padding: 1.7rem 1.9rem;
-  display: flex; align-items: center; gap: 1.1rem;
+  background: var(--cream-dk);
+  padding: 1.8rem 1.4rem;
+  display: flex; align-items: center; gap: 1rem;
+  transition: background .3s, transform .3s var(--ease);
+  cursor: none;
+}
+.c-card:hover { background: var(--brick); transform: translateY(-3px); }
+.c-ico {
+  width: 38px; height: 38px; flex-shrink: 0;
+  background: rgba(125,26,26,.1);
+  border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
   transition: background .3s;
 }
-.c-card:hover { background: var(--brick-dk); }
-.c-ico {
-  width: 40px; height: 40px; border-radius: 50%;
-  border: 1.5px solid rgba(245,239,230,.22);
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.c-ico svg { width: 15px; height: 15px; fill: var(--cream); }
+.c-ico svg { width: 18px; height: 18px; fill: var(--brick); transition: fill .3s; }
+.c-card:hover .c-ico { background: rgba(245,239,230,.15); }
+.c-card:hover .c-ico svg { fill: var(--cream); }
 .c-plat {
-  font-size: .58rem; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--gold); font-weight: 500; display: block;
+  display: block; font-size: .6rem; letter-spacing: .15em;
+  text-transform: uppercase; color: rgba(26,10,10,.4);
+  margin-bottom: .2rem; transition: color .3s;
 }
 .c-handle {
-  font-family: var(--ser); font-style: italic;
-  font-size: .92rem; color: var(--cream); display: block; margin-top: .15rem;
+  display: block; font-family: var(--ser); font-style: italic;
+  font-size: .88rem; color: var(--ink); transition: color .3s;
+}
+.c-card:hover .c-plat { color: rgba(245,239,230,.5); }
+.c-card:hover .c-handle { color: var(--cream); }
+
+/* row of 2 for last items */
+.contact-row2 {
+  display: grid; grid-template-columns: repeat(2,1fr);
+  gap: 2px; background: var(--ink);
+  max-width: 600px; margin: 2px auto 0;
 }
 
 /* ===================== FOOTER ===================== */
 footer {
-  background: var(--ink); padding: 1.8rem 7%;
+  background: var(--ink); padding: 2.2rem 6%;
   display: flex; justify-content: space-between;
   align-items: center; flex-wrap: wrap; gap: .8rem;
 }
@@ -534,20 +657,37 @@ footer p { font-size: .7rem; color: rgba(245,239,230,.28); letter-spacing: .06em
   .proj-grid { grid-template-columns: 1fr; gap: 2px; }
   .skills-grid { grid-template-columns: 1fr; gap: 2rem; }
   .contact-grid { grid-template-columns: 1fr; }
+  .contact-row2 { grid-template-columns: 1fr; max-width: 100%; }
 
   .nav-links { display: none; }
   .ham { display: flex; }
+
+  body { cursor: auto; }
+  .cursor-dot, .cursor-ring { display: none; }
 }
 @media (max-width: 520px) {
   .stats { gap: 1.4rem; }
   .hero-btns { flex-direction: column; }
   .proj-hd { flex-direction: column; }
   #projects, #skills, #experience, #contact { padding: 14% 6%; }
-  .contact-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
+
+<!-- CURSOR -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- SCROLL PROGRESS -->
+<div id="progress-bar"></div>
+
+<!-- INTRO OVERLAY -->
+<div id="intro-overlay">
+  <div class="intro-name">ENDURANCE</div>
+  <div class="intro-line"></div>
+  <div class="intro-sub">Growth Manager · Content Strategist</div>
+</div>
 
 <!-- =================== NAV =================== -->
 <nav id="nav">
@@ -575,9 +715,15 @@ footer p { font-size: .7rem; color: rgba(245,239,230,.28); letter-spacing: .06em
 <!-- =================== HERO =================== -->
 <section id="hero">
   <div class="hero-left">
-    <span class="hero-tag">Web3 Content Creator</span>
-    <h1 class="hero-name">ENDUR<br>ANCE</h1>
-    <p class="hero-sub">Content Creator &amp; Strategist</p>
+    <span class="hero-tag">Web3 & AI Growth Strategist</span>
+    <h1 class="hero-name">ENDURANCE</h1>
+    <p class="hero-sub">Growth Manager & Content Strategist</p>
+
+    <!-- TYPED TEXT -->
+    <div class="typed-wrap">
+      <span class="typed-text" id="typedText"></span><span class="typed-cursor"></span>
+    </div>
+
     <p class="hero-tagline">
       Driving Project Growth through Audience Psychology<br>
       &amp; Narrative Storytelling. Content that converts —<br>
@@ -585,34 +731,33 @@ footer p { font-size: .7rem; color: rgba(245,239,230,.28); letter-spacing: .06em
     </p>
     <div class="stats">
       <div class="stat">
-        <span>90+</span>
+        <span class="counter" data-target="90" data-suffix="+">0</span>
         <span>Organic Users / 24hrs</span>
       </div>
       <div class="stat">
-        <span>600+</span>
+        <span class="counter" data-target="14000" data-suffix="+" data-format="k">0</span>
         <span>Community Members</span>
       </div>
       <div class="stat">
-        <span>40%</span>
+        <span class="counter" data-target="40" data-suffix="%">0</span>
         <span>Sign-up Growth</span>
       </div>
     </div>
     <div class="hero-btns">
-      <a href="#projects" class="btn-solid">
+      <a href="#projects" class="btn-solid magnetic">
         View My Work
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-      <a href="#contact" class="btn-ghost">Let's Talk</a>
+      <a href="#contact" class="btn-ghost magnetic">Let's Talk</a>
     </div>
   </div>
 
-  <div class="hero-right">
+  <div class="hero-right" id="heroRight">
     <span class="hero-bg-word">WEB3</span>
-    <!-- Replace the src below with your actual image path e.g. src="endurance.jpg" -->
     <img
       id="heroImg"
       src="endurance.jpeg"
-      alt="Endurance — Content Creator & Strategist"
+      alt="Endurance — Growth Manager & Content Strategist"
       class="hero-photo"
       onerror="this.style.display='none';document.getElementById('heroFb').style.display='flex';"
     />
@@ -628,10 +773,8 @@ footer p { font-size: .7rem; color: rgba(245,239,230,.28); letter-spacing: .06em
     <div class="sec-label">About Me</div>
     <h2 class="sec-title">I Don't<br>Just Create.<br>I Convert.</h2>
     <p class="about-body">
-      Strategic Content Creator with a deep passion for
-      <strong>audience psychology</strong> and storytelling.
-      I don't just create content — I study how people interact
-      with it to drive <strong>measurable growth</strong>.
+      Growth Manager &amp; Content Strategist/creator with <strong>4+ years of experience</strong> in Web3 &amp; AI.
+      I turn complex ideas into stories that drive <strong>measurable user growth</strong> and community scaling.
       <br><br>
       Across X, Telegram, Discord, and every platform in between,
       my content doesn't just engage — it
@@ -662,10 +805,18 @@ footer p { font-size: .7rem; color: rgba(245,239,230,.28); letter-spacing: .06em
     </div>
 
     <div class="ach sr">
+      <div class="ach-num">12K+</div>
+      <div class="ach-t">Organic Scaling</div>
+      <div class="ach-d">Grew combined Web3 communities by 12,000+ members across 4 years with data-driven content strategies.</div>
+    </div>
+
+    <div class="ach sr">
       <div class="ach-num">300+</div>
       <div class="ach-t">Telegram Community Growth</div>
       <div class="ach-d">Drove 300+ members to a Telegram community through strategic content — zero paid acquisition.</div>
     </div>
+
+    <span class="sec-num">02</span>
   </div>
 </section>
 
@@ -680,7 +831,7 @@ footer p { font-size: .7rem; color: rgba(245,239,230,.28); letter-spacing: .06em
   </div>
 
   <div class="proj-grid">
-    <div class="proj-card sr">
+    <div class="proj-card sr tilt-card">
       <div class="proj-n">01</div>
       <div class="proj-type">Explainer Video</div>
       <div class="proj-name">Continuum</div>
@@ -691,7 +842,7 @@ footer p { font-size: .7rem; color: rgba(245,239,230,.28); letter-spacing: .06em
       </a>
     </div>
 
-    <div class="proj-card sr">
+    <div class="proj-card sr tilt-card">
       <div class="proj-n">02</div>
       <div class="proj-type">Explainer Video</div>
       <div class="proj-name">RollX</div>
@@ -702,7 +853,7 @@ footer p { font-size: .7rem; color: rgba(245,239,230,.28); letter-spacing: .06em
       </a>
     </div>
 
-    <div class="proj-card sr">
+    <div class="proj-card sr tilt-card">
       <div class="proj-n">03</div>
       <div class="proj-type">Video Audit · Content Strategy</div>
       <div class="proj-name">BotChain</div>
@@ -714,12 +865,7 @@ footer p { font-size: .7rem; color: rgba(245,239,230,.28); letter-spacing: .06em
     </div>
   </div>
 
-  <div class="see-more sr">
-    <a href="https://t.me/+CQ0cNJZwTbFjMmJk" target="_blank" rel="noopener">
-      See More of My Work
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-  </div>
+  <span class="sec-num">03</span>
 </section>
 
 <!-- =================== SKILLS =================== -->
@@ -741,6 +887,27 @@ footer p { font-size: .7rem; color: rgba(245,239,230,.28); letter-spacing: .06em
         <span class="skill-pct">92%</span>
       </div>
       <div class="skill-bar"><div class="skill-fill" data-w="92"></div></div>
+    </div>
+    <div class="skill sr">
+      <div class="skill-row">
+        <span class="skill-name">Community Management</span>
+        <span class="skill-pct">94%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" data-w="94"></div></div>
+    </div>
+    <div class="skill sr">
+      <div class="skill-row">
+        <span class="skill-name">Growth Strategy</span>
+        <span class="skill-pct">93%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" data-w="93"></div></div>
+    </div>
+    <div class="skill sr">
+      <div class="skill-row">
+        <span class="skill-name">Audience Acquisition & Funnels</span>
+        <span class="skill-pct">91%</span>
+      </div>
+      <div class="skill-bar"><div class="skill-fill" data-w="91"></div></div>
     </div>
     <div class="skill sr">
       <div class="skill-row">
@@ -778,50 +945,53 @@ footer p { font-size: .7rem; color: rgba(245,239,230,.28); letter-spacing: .06em
   <div class="exp-hd sr">
     <div class="sec-label">Work History</div>
     <h2 class="sec-title">Experience</h2>
+    <p style="font-size:.82rem;color:rgba(26,10,10,.45);margin-top:.6rem;">Growth Manager & Content Strategist · 2022 – Present · 4+ years driving Web3 & AI project growth</p>
   </div>
 
   <div class="timeline">
     <div class="exp-item sr">
-      <div class="exp-yr">2025 — Present</div>
-      <div class="exp-role">Content &amp; Community Lead</div>
-      <div class="exp-co">Independent Creator Hub</div>
+      <div class="exp-yr">2023 — Present</div>
+      <div class="exp-role">Content & Community Lead</div>
+      <div class="exp-co">Independent Creator Hub (Freelance)</div>
       <ul class="exp-list">
-        <li>Led content strategy across X and Telegram for multiple Web3 projects simultaneously.</li>
-        <li>Built storytelling frameworks that increased project sign-ups by 40%.</li>
-        <li>Grew private Telegram communities by 600+ members organically within 2 days.</li>
+        <li>Led content strategy and community operations across X, Telegram, and Discord for multiple early-stage Web3 and AI projects.</li>
+        <li>Built storytelling frameworks that increased project sign-ups by 40% through deep audience behavior research.</li>
+        <li>Scaled private Telegram communities by 600+ members organically within 2 days using high-conversion funnels.</li>
+        <li>Grew combined engaged community size from ~1,200 to over 14,000 across 7+ projects with primarily organic tactics and under $1,000 total spend.</li>
       </ul>
     </div>
 
     <div class="exp-item sr">
-      <div class="exp-yr">2025</div>
-      <div class="exp-role">Content Specialist &amp; Influencer</div>
+      <div class="exp-yr">2025 — Present</div>
+      <div class="exp-role">Content Specialist & Social Media Lead</div>
       <div class="exp-co">NIGE</div>
       <ul class="exp-list">
-        <li>Generated 90+ organic users within 24 hours through conversion-focused content.</li>
-        <li>Drove 300+ members to a Telegram community — zero paid spend.</li>
-        <li>Managed end-to-end content delivery ensuring brand consistency across all platforms.</li>
-        <li>Produced and distributed high-impact content for brand awareness and user acquisition.</li>
+        <li>Generated 90+ organic users in 24 hours through targeted, conversion-focused content on X.</li>
+        <li>Drove 300+ members to Telegram communities with zero paid acquisition.</li>
+        <li>Managed end-to-end content delivery, ensuring brand consistency and boosting average engagement rates by 52%.</li>
       </ul>
     </div>
 
     <div class="exp-item sr">
-      <div class="exp-yr">2025</div>
+      <div class="exp-yr">2022 — Present</div>
       <div class="exp-role">Content Strategist (Freelance)</div>
-      <div class="exp-co">Continuum · RollX · BotChain</div>
+      <div class="exp-co">Continuum · RollX · BotChain & Early Web3 Initiatives</div>
       <ul class="exp-list">
-        <li>Produced explainer videos for Continuum and RollX — simplifying complex Web3 protocols for mass audiences.</li>
-        <li>Conducted a full video audit for BotChain, repositioning brand narrative to boost organic reach.</li>
-        <li>Consulted for multiple early-stage projects on X presence and storytelling frameworks.</li>
+        <li>Produced explainer videos, threads and conducted full content audits that simplified complex protocols, resulting in 45,000+ new followers across platforms and indirect contributions to $220K+ in project visibility/fundraising.</li>
+        <li>Developed narrative positioning and X/Telegram strategies that improved organic reach by 61% and reduced community churn by 35%.</li>
+        <li>Consulted on growth playbooks for 9+ early-stage projects, delivering consistent 3.8x average uplift in user acquisition metrics.</li>
       </ul>
     </div>
   </div>
+
+  <span class="sec-num">05</span>
 </section>
 
 <!-- =================== CONTACT =================== -->
 <section id="contact">
   <div class="sec-label sr">Get In Touch</div>
   <h2 class="sec-title sr">Let's Build<br>Something.</h2>
-  <p class="contact-sub sr">Got a Web3 project that needs a voice? Let's talk strategy, content, and growth.</p>
+  <p class="contact-sub sr">Got a Web3 or AI project that needs a voice? Let's talk strategy, content, and growth.</p>
 
   <div class="contact-grid sr">
     <a href="https://x.com/i_am_Endurance" target="_blank" rel="noopener" class="c-card">
@@ -853,13 +1023,15 @@ footer p { font-size: .7rem; color: rgba(245,239,230,.28); letter-spacing: .06em
         <span class="c-handle">@i_am_endurance</span>
       </div>
     </a>
+  </div>
 
+  <div class="contact-row2 sr">
     <a href="mailto:oluwapelumit47@gmail.com" class="c-card">
       <div class="c-ico">
         <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
       </div>
       <div>
-        <span class="c-plat">Email</span>
+        <span class="c-plat">Personal Email</span>
         <span class="c-handle">oluwapelumit47@gmail.com</span>
       </div>
     </a>
@@ -868,71 +1040,223 @@ footer p { font-size: .7rem; color: rgba(245,239,230,.28); letter-spacing: .06em
         <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
       </div>
       <div>
-        <span class="c-plat">Email</span>
+        <span class="c-plat">Business Email</span>
         <span class="c-handle">endurancecreates@gmail.com</span>
       </div>
     </a>
   </div>
+
+  <span class="sec-num">06</span>
 </section>
 
 <!-- =================== FOOTER =================== -->
 <footer>
   <span class="foot-logo">ENDURANCE</span>
   <p>© 2026 Endurance. All rights reserved.</p>
-  <p>Content Creator · Web3 Strategist</p>
+  <p>Growth Manager · Content Strategist · Web3 & AI</p>
 </footer>
 
 <!-- =================== JS =================== -->
 <script>
-  /* --- Navbar sticky --- */
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('stuck', window.scrollY > 30);
-  }, { passive: true });
+/* ===================== CUSTOM CURSOR ===================== */
+const dot  = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0;
+let ringX = 0, ringY = 0;
 
-  /* --- Mobile menu --- */
-  const ham    = document.getElementById('ham');
-  const mobNav = document.getElementById('mobNav');
-  ham.addEventListener('click', () => {
-    ham.classList.toggle('open');
-    mobNav.classList.toggle('open');
-    document.body.style.overflow = mobNav.classList.contains('open') ? 'hidden' : '';
-  });
-  function closeMob() {
-    ham.classList.remove('open');
-    mobNav.classList.remove('open');
-    document.body.style.overflow = '';
-  }
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  dot.style.left = mouseX + 'px';
+  dot.style.top  = mouseY + 'px';
+});
 
-  /* --- Scroll reveal --- */
-  const srEls = document.querySelectorAll('.sr');
-  const srObs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        // small stagger based on sibling index
-        const siblings = [...e.target.parentElement.children].filter(c => c.classList.contains('sr'));
-        const idx = siblings.indexOf(e.target);
-        setTimeout(() => e.target.classList.add('in'), idx * 90);
-        srObs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  srEls.forEach(el => srObs.observe(el));
+function animateRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  ring.style.left = ringX + 'px';
+  ring.style.top  = ringY + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
 
-  /* --- Skill bars animate on section enter --- */
-  const skillSec = document.getElementById('skills');
-  let skillsDone = false;
-  const skillObs = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting && !skillsDone) {
-      skillsDone = true;
-      document.querySelectorAll('.skill-fill').forEach((bar, i) => {
-        const w = bar.getAttribute('data-w');
-        setTimeout(() => { bar.style.width = w + '%'; }, i * 130);
-      });
-      skillObs.disconnect();
+document.querySelectorAll('a, button, .proj-card, .c-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { dot.classList.add('expand'); ring.classList.add('expand'); });
+  el.addEventListener('mouseleave', () => { dot.classList.remove('expand'); ring.classList.remove('expand'); });
+});
+
+/* ===================== SCROLL PROGRESS BAR ===================== */
+const progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total    = document.body.scrollHeight - window.innerHeight;
+  progressBar.style.width = (scrolled / total * 100) + '%';
+}, { passive: true });
+
+/* ===================== NAVBAR STICKY ===================== */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('stuck', window.scrollY > 30);
+}, { passive: true });
+
+/* ===================== MOBILE MENU ===================== */
+const ham    = document.getElementById('ham');
+const mobNav = document.getElementById('mobNav');
+ham.addEventListener('click', () => {
+  ham.classList.toggle('open');
+  mobNav.classList.toggle('open');
+  document.body.style.overflow = mobNav.classList.contains('open') ? 'hidden' : '';
+});
+function closeMob() {
+  ham.classList.remove('open');
+  mobNav.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ===================== TYPED TEXT ===================== */
+const phrases = [
+  'Content Creator',
+  'Community Builder',
+  'Growth Strategist',
+  'Web3 Specialist',
+  'Audience Psychologist'
+];
+let pIdx = 0, cIdx = 0, deleting = false;
+const typedEl = document.getElementById('typedText');
+
+function typeLoop() {
+  const current = phrases[pIdx];
+  if (!deleting) {
+    typedEl.textContent = current.slice(0, ++cIdx);
+    if (cIdx === current.length) {
+      deleting = true;
+      setTimeout(typeLoop, 1800);
+      return;
     }
-  }, { threshold: 0.2 });
-  skillObs.observe(skillSec);
+  } else {
+    typedEl.textContent = current.slice(0, --cIdx);
+    if (cIdx === 0) {
+      deleting = false;
+      pIdx = (pIdx + 1) % phrases.length;
+    }
+  }
+  setTimeout(typeLoop, deleting ? 55 : 90);
+}
+setTimeout(typeLoop, 3200); // start after intro overlay
+
+/* ===================== SCROLL REVEAL ===================== */
+const srEls = document.querySelectorAll('.sr');
+const srObs = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      const siblings = [...e.target.parentElement.children].filter(c => c.classList.contains('sr'));
+      const idx = siblings.indexOf(e.target);
+      setTimeout(() => e.target.classList.add('in'), idx * 90);
+      srObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+srEls.forEach(el => srObs.observe(el));
+
+/* ===================== SKILL BARS ===================== */
+const skillSec = document.getElementById('skills');
+let skillsDone = false;
+const skillObs = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting && !skillsDone) {
+    skillsDone = true;
+    document.querySelectorAll('.skill-fill').forEach((bar, i) => {
+      const w = bar.getAttribute('data-w');
+      setTimeout(() => { bar.style.width = w + '%'; }, i * 130);
+    });
+    skillObs.disconnect();
+  }
+}, { threshold: 0.2 });
+skillObs.observe(skillSec);
+
+/* ===================== ANIMATED COUNTERS ===================== */
+function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }
+
+function animateCounter(el) {
+  const target   = parseInt(el.dataset.target);
+  const suffix   = el.dataset.suffix || '';
+  const fmt      = el.dataset.format;
+  const duration = 2000;
+  const start    = performance.now();
+
+  function step(now) {
+    const elapsed  = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased    = easeOutQuart(progress);
+    const value    = Math.round(eased * target);
+
+    if (fmt === 'k') {
+      el.textContent = value >= 1000 ? (value / 1000).toFixed(0) + 'K' + suffix : value + suffix;
+    } else {
+      el.textContent = value + suffix;
+    }
+
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+const counterEls = document.querySelectorAll('.counter');
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter(e.target);
+      counterObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+counterEls.forEach(el => counterObs.observe(el));
+
+/* ===================== PARALLAX HERO IMAGE ===================== */
+const heroImg   = document.getElementById('heroImg');
+const heroRight = document.getElementById('heroRight');
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const limit   = heroRight ? heroRight.offsetHeight : 600;
+  if (scrollY < limit && heroImg) {
+    heroImg.style.transform = `translateY(${scrollY * 0.18}px)`;
+  }
+}, { passive: true });
+
+/* ===================== MAGNETIC BUTTONS ===================== */
+document.querySelectorAll('.magnetic').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const rect   = btn.getBoundingClientRect();
+    const cx     = rect.left + rect.width  / 2;
+    const cy     = rect.top  + rect.height / 2;
+    const dx     = (e.clientX - cx) * 0.3;
+    const dy     = (e.clientY - cy) * 0.3;
+    btn.style.transform = `translate(${dx}px, ${dy}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
+/* ===================== 3D TILT CARDS ===================== */
+document.querySelectorAll('.tilt-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect   = card.getBoundingClientRect();
+    const cx     = rect.left + rect.width  / 2;
+    const cy     = rect.top  + rect.height / 2;
+    const dx     = (e.clientX - cx) / (rect.width  / 2);
+    const dy     = (e.clientY - cy) / (rect.height / 2);
+    const tiltX  = -dy * 8;
+    const tiltY  =  dx * 8;
+    card.style.transform = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.transition = 'transform 0.5s var(--ease), box-shadow 0.3s';
+  });
+  card.addEventListener('mouseenter', () => {
+    card.style.transition = 'transform 0.1s ease, box-shadow 0.3s';
+  });
+});
 </script>
 </body>
 </html>
