@@ -66,20 +66,20 @@ const CV = {
 function insignia({ tagline = "CONTENT &amp; CREATIVE", text = "currentColor", line = "currentColor", icon = "#4E0E1A", label = "Endurance — Content and Creative" } = {}) {
   return `<svg viewBox="0 0 520 170" role="img" aria-label="${label}" xmlns="http://www.w3.org/2000/svg">
   <g transform="rotate(-14 62 70)">
-    <path d="M28 40 h68 a10 10 0 0 1 10 10 v36 a10 10 0 0 1 -10 10 h-16 v14 l-13 -14 h-39 a10 10 0 0 1 -10 -10 v-36 a10 10 0 0 1 10 -10z" fill="none" stroke="${line}" stroke-width="4.5" stroke-linejoin="round"/>
-    <path d="M52 52 l28 16 l-28 16z" fill="${icon}"/></g>
-  <text x="260" y="92" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="800" font-size="58" fill="${text}" letter-spacing="-1">Endurance</text>
+    <path d="M28 40 h68 a10 10 0 0 1 10 10 v36 a10 10 0 0 1 -10 10 h-16 v14 l-13 -14 h-39 a10 10 0 0 1 -10 -10 v-36 a10 10 0 0 1 10 -10z" fill="none" style="stroke:${line}" stroke-width="4.5" stroke-linejoin="round"/>
+    <path d="M52 52 l28 16 l-28 16z" style="fill:${icon}"/></g>
+  <text x="260" y="92" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="800" font-size="58" style="fill:${text}" letter-spacing="-1">Endurance</text>
   <g transform="rotate(14 458 70)">
-    <path d="M424 40 h68 a10 10 0 0 1 10 10 v36 a10 10 0 0 1 -10 10 h-39 l-13 14 v-14 h-16 a10 10 0 0 1 -10 -10 v-36 a10 10 0 0 1 10 -10z" fill="none" stroke="${line}" stroke-width="4.5" stroke-linejoin="round"/>
-    <path d="M458 86 c-17 -11 -20 -22 -12 -27 c5 -3 10 -1 12 4 c2 -5 7 -7 12 -4 c8 5 5 16 -12 27z" fill="${icon}"/></g>
-  <g stroke="${icon}" stroke-width="4.5" stroke-linecap="round"><path d="M500 14 l-2 12 M514 24 l-9 7"/></g>
+    <path d="M424 40 h68 a10 10 0 0 1 10 10 v36 a10 10 0 0 1 -10 10 h-39 l-13 14 v-14 h-16 a10 10 0 0 1 -10 -10 v-36 a10 10 0 0 1 10 -10z" fill="none" style="stroke:${line}" stroke-width="4.5" stroke-linejoin="round"/>
+    <path d="M458 86 c-17 -11 -20 -22 -12 -27 c5 -3 10 -1 12 4 c2 -5 7 -7 12 -4 c8 5 5 16 -12 27z" style="fill:${icon}"/></g>
+  <g style="stroke:${icon}" stroke-width="4.5" stroke-linecap="round"><path d="M500 14 l-2 12 M514 24 l-9 7"/></g>
   ${(() => { const long = tagline.replace(/&amp;/g, "&").length > 20; const ls = long ? 3 : 4.6, half = long ? 168 : 132;
-    return `<line x1="${260 - half - 34}" y1="140" x2="${260 - half - 6}" y2="140" stroke="${icon}" stroke-width="1.6"/>
-  <text x="260" y="144.5" text-anchor="middle" font-family="DM Sans, sans-serif" font-weight="600" font-size="12.5" letter-spacing="${ls}" fill="${text}">${tagline}</text>
-  <line x1="${260 + half + 6}" y1="140" x2="${260 + half + 34}" y2="140" stroke="${icon}" stroke-width="1.6"/>`; })()}
+    return `<line x1="${260 - half - 34}" y1="140" x2="${260 - half - 6}" y2="140" style="stroke:${icon}" stroke-width="1.6"/>
+  <text x="260" y="144.5" text-anchor="middle" font-family="DM Sans, sans-serif" font-weight="600" font-size="12.5" letter-spacing="${ls}" style="fill:${text}">${tagline}</text>
+  <line x1="${260 + half + 6}" y1="140" x2="${260 + half + 34}" y2="140" style="stroke:${icon}" stroke-width="1.6"/>`; })()}
 </svg>`;
 }
-const bubblesMini = `<svg viewBox="0 0 64 34" aria-hidden="true"><g transform="rotate(-12 16 15)"><path d="M5 6 h22 a4 4 0 0 1 4 4 v11 a4 4 0 0 1 -4 4 h-5 v5 l-5 -5 h-12 a4 4 0 0 1 -4 -4 v-11 a4 4 0 0 1 4 -4z" fill="none" stroke="#24191C" stroke-width="2.4" stroke-linejoin="round"/><path d="M13 10.5 l9 5 l-9 5z" fill="#7A1728"/></g><g transform="rotate(12 48 15)"><path d="M37 6 h22 a4 4 0 0 1 4 4 v11 a4 4 0 0 1 -4 4 h-12 l-5 5 v-5 h-5 a4 4 0 0 1 -4 -4 v-11 a4 4 0 0 1 4 -4z" fill="none" stroke="#24191C" stroke-width="2.4" stroke-linejoin="round"/><path d="M48 21 c-6 -4 -7 -8 -4.3 -9.7 c1.8 -1.1 3.4 -.3 4.3 1.4 c.9 -1.7 2.5 -2.5 4.3 -1.4 c2.7 1.7 1.7 5.7 -4.3 9.7z" fill="#7A1728"/></g></svg>`;
+const bubblesMini = `<svg viewBox="0 0 64 34" aria-hidden="true"><g transform="rotate(-12 16 15)"><path d="M5 6 h22 a4 4 0 0 1 4 4 v11 a4 4 0 0 1 -4 4 h-5 v5 l-5 -5 h-12 a4 4 0 0 1 -4 -4 v-11 a4 4 0 0 1 4 -4z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M13 10.5 l9 5 l-9 5z" style="fill:var(--accent)"/></g><g transform="rotate(12 48 15)"><path d="M37 6 h22 a4 4 0 0 1 4 4 v11 a4 4 0 0 1 -4 4 h-12 l-5 5 v-5 h-5 a4 4 0 0 1 -4 -4 v-11 a4 4 0 0 1 4 -4z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M48 21 c-6 -4 -7 -8 -4.3 -9.7 c1.8 -1.1 3.4 -.3 4.3 1.4 c.9 -1.7 2.5 -2.5 4.3 -1.4 c2.7 1.7 1.7 5.7 -4.3 9.7z" style="fill:var(--accent)"/></g></svg>`;
 
 const ICON = {
   x: `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.8 8 10.2h-6.3l-4.9-6.4-5.6 6.4H2.2l7.3-8.3L1.8 3h6.4l4.4 5.8L17.8 3zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5z"/></svg>`,
@@ -98,7 +98,6 @@ function renderChrome() {
   if (nav) {
     nav.outerHTML = `<header class="nav" id="top-nav"><div class="wrap"><nav class="nav-inner" aria-label="Main">
       <a class="brand" href="${h}#top" aria-label="Endurance — home">${bubblesMini}<span>Endurance</span></a>
-      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       <ul class="nav-links">
         <li><a href="${h}#about">About</a></li>
         <li><a href="${h}#work">Work</a></li>
@@ -106,7 +105,14 @@ function renderChrome() {
         <li><a href="${h}#skills">Skills</a></li>
         <li><a href="${h}#proof">Proof of Work</a></li>
         <li><a class="nav-cta" href="#contact">Contact</a></li>
-      </ul></nav></div></header>`;
+      </ul>
+      <div class="nav-tools">
+        <button class="theme-btn" data-theme-toggle aria-label="Switch to dark mode">
+          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a7 7 0 1 0 10.5 10.5z"/></svg>
+          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div></nav></div></header>`;
   }
   const foot = document.querySelector("[data-footer]");
   if (foot) {
@@ -130,7 +136,7 @@ function renderChrome() {
     </div></footer>`;
   }
   document.querySelectorAll("[data-insignia]").forEach((el) => {
-    el.innerHTML = insignia({ tagline: el.dataset.insignia || undefined, text: "#7A1728", line: "#7A1728", icon: "#4E0E1A" });
+    el.innerHTML = insignia({ tagline: el.dataset.insignia || undefined, text: "var(--accent)", line: "var(--accent)", icon: "var(--accent-deep)" });
   });
 }
 
@@ -146,6 +152,18 @@ function initNav() {
   nav.querySelectorAll(".nav-links a").forEach((a) => a.addEventListener("click", () => { nav.classList.remove("open"); toggle.setAttribute("aria-expanded", false); }));
   const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 30);
   onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
+}
+
+function initTheme() {
+  const root = document.documentElement, btn = document.querySelector("[data-theme-toggle]");
+  if (!btn) return;
+  const label = () => btn.setAttribute("aria-label", root.dataset.theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+  label();
+  btn.addEventListener("click", () => {
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = next; label();
+    try { localStorage.setItem("theme", next); } catch {}
+  });
 }
 
 function initReveal() {
@@ -174,7 +192,7 @@ function initCopy() {
 /* ---------- video grid + lightbox ---------- */
 const driveThumb = (id) => `https://drive.google.com/thumbnail?id=${id}&sz=w720`;
 const srcFor = (v) => v.type === "drive" ? `https://drive.google.com/file/d/${v.id}/preview`
-  : v.type === "x" ? `https://platform.twitter.com/embed/Tweet.html?id=${v.id}&dnt=true&theme=light`
+  : v.type === "x" ? `https://platform.twitter.com/embed/Tweet.html?id=${v.id}&dnt=true&theme=${document.documentElement.dataset.theme === "dark" ? "dark" : "light"}`
   : v.src;
 const linkFor = (v) => v.type === "drive" ? `https://drive.google.com/file/d/${v.id}/view`
   : v.type === "x" ? `https://x.com/i_am_endurance/status/${v.id}` : v.src;
@@ -341,6 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderChrome();
   renderVideos();
   initNav();
+  initTheme();
   initReveal();
   initCopy();
   initLightbox();
