@@ -22,11 +22,11 @@ const SITE = {
 /* ---------- video showcase data ---------- */
 const VIDEOS = [
   { type: "x", id: "2115507130358997026", title: "The Gamdom Takeover", note: "60K+ organic views", thumb: "assets/img/gamdom-thumb.jpg" },
+  { type: "x", id: "2118073664675729609", title: "Tangem", note: "Watch on X" /* add thumb: "assets/img/tangem-thumb.jpg" once you have a frame */ },
+  { type: "drive", id: "188dUU_lCNgTkFhj9pcPWenTQrcX7lHSo", title: "Avici card", note: "UGC video" },
   { type: "drive", id: "1zkPmNDuNh598LWR5GlBf-DbPzDJn0S8j", title: "Cineflicks", note: "UGC video" },
   { type: "drive", id: "1xrsF2DztbTtA4QTU3osTgAYJyQXmQoGm", title: "PerleLabs", note: "Project explainer" },
   { type: "drive", id: "1shOxPoBfEBi-5SY2YmdewHhTqYpHZC2Q", title: "Sui", note: "Ecosystem content" },
-  { type: "drive", id: "1kmvVTOF1YmWfcwXwL2bjaAmE42oreh50", title: "Trench Exchange", note: "UGC video" },
-  { type: "drive", id: "1g9YYuAv5IsoPoXsweeSV6Bp7AJbvTvPe", title: "Telegram contest", note: "Contest entry" },
 ];
 
 /* ---------- CV content (built from the portfolio) ---------- */
@@ -183,8 +183,8 @@ function renderVideos() {
   const grid = document.querySelector("[data-videos]");
   if (!grid) return;
   grid.innerHTML = VIDEOS.map((v, i) => `
-    <button class="vcard reveal d${i % 4}" data-video="${i}" aria-label="Play ${v.title}">
-      <img src="${v.thumb || driveThumb(v.id)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add('no-thumb')">
+    <button class="vcard reveal d${i % 4}${!v.thumb && v.type !== "drive" ? " no-thumb" : ""}" data-video="${i}" aria-label="Play ${v.title}">
+      <img src="${v.thumb || (v.type === "drive" ? driveThumb(v.id) : "")}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add('no-thumb')">
       <span class="play-dot" aria-hidden="true"></span>
       <span class="vmeta"><b>${v.title}</b><span>${v.note}</span></span>
     </button>`).join("");
